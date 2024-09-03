@@ -6,7 +6,7 @@ public class ExtendedDropItemRequest : IAPIMessage
 	[NonSerialized] public const string NAME = nameof(ExtendedDropItemRequest);
 
 	public string fileName = "";
-	public float scale = 1.0f;
+	public int count = 1;
 }
 
 [Serializable]

@@ -6,6 +6,7 @@ using System.Collections.Concurrent;
 using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
+using WebSocketSharp;
 using WebSocketSharp.Server;
 
 namespace SuisApiExtension.Detour
@@ -19,11 +20,13 @@ namespace SuisApiExtension.Detour
 		private static ConcurrentQueue<string> justOpenedSessionIDs;
 		private static ConcurrentQueue<string> justClosedSessionIDs;
 		private static ConcurrentQueue<APIBaseMessage<APIMessageEmpty>> inboundMessageQueue;
+		private static ConcurrentDictionary<string, WebSocket> sessions;
 
 		private static APIExecutors normalExecutor;
 		private static APIExecutorsExtended extendedExecutor;
 
 		private static MethodInfo messageTypeInvalidCall;
+
 
 		[HarmonyPrefix]
 		[HarmonyPatch(typeof(VTubeStudioAPI), "Start")]
@@ -49,6 +52,7 @@ namespace SuisApiExtension.Detour
 			justOpenedSessionIDs = null;
 			justClosedSessionIDs = null;
 			inboundMessageQueue = null;
+			sessions = null;
 		}
 
 		private static void CheckReference()
@@ -92,10 +96,18 @@ namespace SuisApiExtension.Detour
 					Plugin.LogMessage("Got inboundMessageQueue");
 			}
 
+			if(sessions == null)
+			{
+				sessions = (ConcurrentDictionary<string, WebSocket>)typeof(VTubeStudioAPI).GetField(nameof(sessions), BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+				if (sessions != null)
+					Plugin.LogMessage("Got sessions");
+			}
+
 			if (messageTypeInvalidCall == null)
 			{
 				messageTypeInvalidCall = typeof(VTubeStudioAPI).GetMethod("messageTypeInvalid", BindingFlags.Static | BindingFlags.NonPublic);
 			}
+
 		}
 
 		[HarmonyPrefix]
@@ -638,7 +650,7 @@ namespace SuisApiExtension.Detour
 			apibaseMessage.websocketSessionID = sessionID;
 			apibaseMessage.requestID = requestID;
 
-			if(apibaseMessage.data == null)
+			if (apibaseMessage.data == null)
 			{
 				var temp = JObject.Parse(data);
 				if (temp != null && temp["data"] != null)
@@ -650,13 +662,62 @@ namespace SuisApiExtension.Detour
 			VTubeStudioAPI_Detour.extendedExecutor.ExecutorInstance_ExtendedDropImageRequest.Execute(apibaseMessage);
 		}
 
-		//Pack this into a generic
-/*		public static async void sendToSession<T>(APIBaseMessage<T> responseToSend) where T : IAPIMessage
+		/// <summary>
+		/// This is because the JsonUtility from Unity fails to convert data node.
+		/// </summary>
+		/// <typeparam name="T">IAPIMessage message</typeparam>
+		/// <param name="responseToSend">Respond to send</param>
+		public static async void sendToSession<T>(APIBaseMessage<T> responseToSend) where T : IAPIMessage
 		{
+			var text = JsonConvert.SerializeObject(responseToSend);
+
 			await Task.Run(delegate
 			{
-				VTubeStudioAPI.sendToSession(responseToSend.websocketSessionID, JsonUtility.ToJson(responseToSend), sendAsync: false);
+				sendToSession(responseToSend.websocketSessionID, text, sendAsync: false);
 			});
-		}*/
+		}
+
+		private static void sendToSession(string sessionID, string responseToSend, bool sendAsync)
+		{
+			Debug.LogError("Sending response session ID: " + sessionID);
+			Debug.LogError("Sending response: " + responseToSend);
+			bool logDebugResponse = false;
+			if (VTubeStudioAPI.doAPILog_DEBUG)
+			{
+				VTubeStudioAPI.APIDebug("[API][A->C] " + responseToSend, false);
+			}
+			if (sessionID.IsNullOrEmptyOrWhitespace())
+			{
+				VTubeStudioAPI.APIDebug("Failed to send API response: Empty or unknown session ID.", false);
+				return;
+			}
+			WebSocket webSocket;
+			if (!VTubeStudioAPI_Detour.sessions.TryGetValue(sessionID, out webSocket) || webSocket == null || !webSocket.IsAlive)
+			{
+				VTubeStudioAPI.APIDebug("Error while attempting to send message to session ID " + sessionID + ". Maybe the socket is already closed?", false);
+				return;
+			}
+			if (sendAsync)
+			{
+				webSocket.SendAsync(responseToSend, delegate (bool success)
+				{
+					if (!success)
+					{
+						VTubeStudioAPI.APIDebug("Failed to send message to session ID " + sessionID + ". Maybe the socket is already closed?", false);
+						return;
+					}
+					if (logDebugResponse)
+					{
+						VTubeStudioAPI.APIDebug("Sent response to " + sessionID + ": " + responseToSend, false);
+					}
+				});
+				return;
+			}
+			if (logDebugResponse)
+			{
+				VTubeStudioAPI.APIDebug("Sending response to " + sessionID + ": " + responseToSend, false);
+			}
+			webSocket.Send(responseToSend);
+		}
 	}
 }

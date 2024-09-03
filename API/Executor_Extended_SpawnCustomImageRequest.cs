@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SuisApiExtension.Detour;
+using UnityEngine;
 
 namespace SuisApiExtension.API
 {
@@ -13,7 +14,6 @@ namespace SuisApiExtension.API
 			}
 
 			string pathToLoadFrom = System.IO.Path.Combine(Application.streamingAssetsPath, "Items", payload.data.fileName).Replace('\\', '/');
-			Plugin.LogError($"Path {pathToLoadFrom}");
 
 			if (!System.IO.File.Exists(pathToLoadFrom))
 			{
@@ -21,13 +21,17 @@ namespace SuisApiExtension.API
 				return;
 			}
 
-			Plugin.LogError($"Response?");
-
 			APIBaseMessage<ExtendedDropItemResponse> basicResponse = VTubeStudioAPI.GetBasicResponse<ExtendedDropItemResponse>(payload.websocketSessionID, payload.requestID, "ExtendedDropItemResponse");
 			basicResponse.data = new ExtendedDropItemResponse();
 			basicResponse.data.success = true;
+			var twitch_Dropper = TwitchDropper.Instance();
+			if (twitch_Dropper != null)
+			{
+				for(int i=0; i<payload.data.count; i++)
+					twitch_Dropper.DropImage("file://" + pathToLoadFrom);
+			}
 
-			VTubeStudioAPI.sendToSession<ExtendedDropItemResponse>(basicResponse);
+			VTubeStudioAPI_Detour.sendToSession(basicResponse);
 		}
 
 		protected override string GetExecutorRequestName() => nameof(ExtendedDropItemRequest);

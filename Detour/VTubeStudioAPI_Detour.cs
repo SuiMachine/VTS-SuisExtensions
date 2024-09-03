@@ -552,12 +552,7 @@ namespace SuisApiExtension.Detour
 			apibaseMessage.sessionAuthInfo = auth;
 			apibaseMessage.websocketSessionID = sessionID;
 			apibaseMessage.requestID = requestID;
-
-			Plugin.LogMessage($"Processing: {data}");
-			Plugin.LogMessage($"Processing type: {apibaseMessage.messageType}");
-			Plugin.LogMessage($"Processing file null?: {apibaseMessage.data == null}");
 			VTubeStudioAPI_Detour.normalExecutor.ExecutorInstance_ItemUnloadRequest.Execute(apibaseMessage);
-
 		}
 
 		private static void execute_ItemAnimationControlRequest(string sessionID, string requestID, string data, AuthenticatedSession auth)
@@ -679,8 +674,8 @@ namespace SuisApiExtension.Detour
 
 		private static void sendToSession(string sessionID, string responseToSend, bool sendAsync)
 		{
-			Debug.LogError("Sending response session ID: " + sessionID);
-			Debug.LogError("Sending response: " + responseToSend);
+			//Debug.LogError("Sending response session ID: " + sessionID);
+			//Debug.LogError("Sending response: " + responseToSend);
 			bool logDebugResponse = false;
 			if (VTubeStudioAPI.doAPILog_DEBUG)
 			{

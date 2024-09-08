@@ -3,3 +3,5 @@ Logs/*
 Packages/*
 Temp/*
 .vsconfig
+.vs/*
+obj/*

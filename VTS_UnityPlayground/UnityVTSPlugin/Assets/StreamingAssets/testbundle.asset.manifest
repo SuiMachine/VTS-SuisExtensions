@@ -1,0 +1,46 @@
+ManifestFileVersion: 0
+CRC: 353278661
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: bcafdd8bc8d1ad9c211a15637c543c98
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 1fbaebea3e0dd1ef27e1a85872538297
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: bcafdd8bc8d1ad9c211a15637c543c98
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 50
+  Script: {instanceID: 0}
+- Class: 61
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9f98619c03c4ef54d9c0d089e32d03db, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: dba05a34f87971643a8c66283be3c043, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 212
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: Assembly-CSharp.dll
+  ClassName: AuthenticatedSession
+Assets:
+- Assets/TwojaStaraTest.prefab
+- Assets/TestObject.prefab
+- Assets/1_64.png
+Dependencies: []

@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using Assets.ExtendedDropImages.Messages;
+using HarmonyLib;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SuisApiExtension.API;

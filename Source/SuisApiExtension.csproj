@@ -43,6 +43,9 @@
       <HintPath>D:\Steam\steamapps\common\VTube Studio\VTube Studio_Data\Managed\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="PluginContent">
+      <HintPath>..\VTS_UnityPlayground\UnityVTS_Release\UnityVTSPlugin_Data\Managed\PluginContent.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>D:\Steam\steamapps\common\VTube Studio\VTube Studio_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>

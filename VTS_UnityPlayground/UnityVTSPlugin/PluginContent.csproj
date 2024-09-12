@@ -59,13 +59,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\BuildAssetBundle.cs" />
-    <Compile Include="Assets\Scripts\ExtendedDropImages\RequestData\Data.cs" />
     <Compile Include="Assets\Scripts\ExtendedDropImages\ExtendedDroppedImageBehaviour.cs" />
+    <Compile Include="Assets\Scripts\ExtendedDropImages\RequestData\Data.cs" />
     <Compile Include="Assets\Scripts\ExtendedDropImages\ExtendedImagesDropper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\PluginContent.asmdef" />
-    <None Include="Assets\Plugins\Assembly-CSharp.dll.dll" />
+    <None Include="Assets\Plugins\Assembly-CSharp.dll" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -412,16 +412,16 @@
       <HintPath>Library\PackageCache\com.unity.collab-proxy@2.3.1\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>Assets\Plugins\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="unityplastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@2.3.1\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="log4netPlastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@2.3.1\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Assembly-CSharp.dll">
-      <HintPath>Assets\Plugins\Assembly-CSharp.dll.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="netstandard">

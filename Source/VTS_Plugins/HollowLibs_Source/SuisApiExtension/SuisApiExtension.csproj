@@ -4,15 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D9B6EA1E-485F-4AFD-BE64-D32FFACE3EE7}</ProjectGuid>
+    <ProjectGuid>{2AB892D7-9464-4480-B53B-8CE4307F993D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Assembly_CSharp</RootNamespace>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <RootNamespace>SuisApiExtension</RootNamespace>
+    <AssemblyName>SuisApiExtension</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,7 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,9 +29,18 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\UnityVTS_Release\UnityVTSPlugin_Data\Managed\netstandard.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Steam\steamapps\common\VTube Studio\VTube Studio_Data\Managed\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,21 +59,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\APIBaseMessage.cs" />
-    <Compile Include="API\APIError.cs" />
-    <Compile Include="API\AuthenticatedSession.cs" />
-    <Compile Include="API\_Other.cs" />
-    <Compile Include="API\IAPIRequestExecutor.cs" />
-    <Compile Include="Interfaces\IAPIMessage.cs" />
-    <Compile Include="Interfaces\IMultiSelectionWindowResultReceiver.cs" />
+    <Compile Include="API\APICustomMessage.cs" />
+    <Compile Include="API\APIExecutorsExtended.cs" />
+    <Compile Include="API\IAPIRequestCustomExecutor.cs" />
+    <Compile Include="Detour\VTubeStudioAPI_Detour.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StringHelper.cs" />
-    <Compile Include="TimeHelper.cs" />
-    <Compile Include="TwitchDropper.cs" />
-    <Compile Include="Utility\SingletonMonoBehaviour.cs" />
-    <Compile Include="Utility\SingletonMonoBehaviourEntry.cs" />
-    <Compile Include="Utility\SingletonMonoBehaviourManager.cs" />
-    <Compile Include="VTubeStudioAPI.cs" />
+    <Compile Include="VTSPluginExternals.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Assembly-CSharp\Assembly-CSharp.csproj">
+      <Project>{d9b6ea1e-485f-4afd-be64-d32fface3ee7}</Project>
+      <Name>Assembly-CSharp</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.9.34728.123
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34729.46
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{D9B6EA1E-485F-4AFD-BE64-D32FFACE3EE7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp\Assembly-CSharp.csproj", "{D9B6EA1E-485F-4AFD-BE64-D32FFACE3EE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuisApiExtension", "SuisApiExtension\SuisApiExtension.csproj", "{2AB892D7-9464-4480-B53B-8CE4307F993D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,11 +17,15 @@ Global
 		{D9B6EA1E-485F-4AFD-BE64-D32FFACE3EE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9B6EA1E-485F-4AFD-BE64-D32FFACE3EE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9B6EA1E-485F-4AFD-BE64-D32FFACE3EE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AB892D7-9464-4480-B53B-8CE4307F993D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AB892D7-9464-4480-B53B-8CE4307F993D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AB892D7-9464-4480-B53B-8CE4307F993D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AB892D7-9464-4480-B53B-8CE4307F993D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {482C0445-7983-439B-B90A-75F29FE5AD56}
+		SolutionGuid = {75E845FF-154C-47E8-BE41-5E3398FB8C06}
 	EndGlobalSection
 EndGlobal

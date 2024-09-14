@@ -704,9 +704,6 @@ namespace SuisApiExtension.Detour
 			webSocket.Send(responseToSend);
 		}
 
-		public static void SendCustomError(APICustomMessage payload, ErrorID itemFileNameMissing, string v)
-		{
-			Plugin.LogError($"F: {v}");
-		}
+		public static void SendCustomError(APICustomMessage payload, ErrorID errorID, string errorMessage) => VTubeStudioAPI.SendError(payload.websocketSessionID, payload.requestID, errorID, errorMessage);
 	}
 }

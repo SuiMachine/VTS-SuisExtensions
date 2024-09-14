@@ -8,16 +8,16 @@ namespace SuisApiExtension.API
 		public static Dictionary<string, IAPIRequestCustomExecutor> CustomAPIExecutors = new Dictionary<string, IAPIRequestCustomExecutor>();
 		public static bool RegisterCustomExecutor<T>(string name, IAPIRequestCustomExecutor executor)
 		{
-			if(!CustomAPIExecutors.ContainsKey(name))
+			if (!CustomAPIExecutors.ContainsKey(name))
 			{
-				Plugin.LogMessage($"Registered executor  to register executor {name}");
+				VTSPluginExternals.LogMessage($"Registered executor  to register executor {name}");
 
 				CustomAPIExecutors.Add(name, executor);
 				return true;
 			}
 			else
 			{
-				Plugin.LogMessage($"Trying to register executor {name}");
+				VTSPluginExternals.LogMessage($"Trying to register executor {name}");
 				return false;
 			}
 		}

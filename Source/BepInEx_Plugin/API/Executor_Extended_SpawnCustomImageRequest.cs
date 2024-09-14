@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using SuisApiExtension.Detour;
+﻿using SuisApiExtension.Detour;
 using UnityEngine;
 
 namespace SuisApiExtension.API

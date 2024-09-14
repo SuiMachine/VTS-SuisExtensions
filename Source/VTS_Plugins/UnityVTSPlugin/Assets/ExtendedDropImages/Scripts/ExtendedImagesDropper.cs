@@ -1,42 +1,46 @@
 using Assets.ExtendedDropImages.Messages;
+using SuisApiExtension.Detour;
 using UnityEngine;
-
-public class ExtendedImagesDropper : IAPIRequestExecutor<ExtendedDropItemRequest>
+namespace SuisApiExtension.API
 {
-	public static ExtendedImagesDropper Instance;
-	[SerializeField] private ExtendedDroppedImageBehaviour spawnObjectReference;
-
-	void Awake()
+	public class Executor_ExtendedDropImageRequest : IAPIRequestCustomExecutor
 	{
-		if(Instance != null)
+		protected override void ExecuteInternal(APICustomMessage payload)
 		{
-			Destroy(this.gameObject);
+			var deserializedData = payload.data.ToObject<ExtendedDropItemRequest>();
+
+			if (deserializedData == null || string.IsNullOrEmpty(deserializedData.fileName) || deserializedData.fileName.Trim() == "")
+			{
+				VTubeStudioAPI_Detour.SendCustomError(payload, ErrorID.ItemFileNameMissing, "You have to provide an ID of an Item to load.");
+				return;
+			}
+
+			string pathToLoadFrom = System.IO.Path.Combine(Application.streamingAssetsPath, "Items", deserializedData.fileName).Replace('\\', '/');
+
+			if (!System.IO.File.Exists(pathToLoadFrom))
+			{
+				VTubeStudioAPI_Detour.SendCustomError(payload, ErrorID.ItemFileNameNotFound, "No item to load was found.");
+				return;
+			}
+
+			APIBaseMessage<ExtendedDropItemResponse> basicResponse = VTubeStudioAPI.GetBasicResponse<ExtendedDropItemResponse>(payload.websocketSessionID, payload.requestID, "ExtendedDropItemResponse");
+			basicResponse.data = new ExtendedDropItemResponse();
+			basicResponse.data.success = true;
+			var twitch_Dropper = TwitchDropper.Instance();
+			if (twitch_Dropper != null)
+			{
+				for (int i = 0; i < deserializedData.count; i++)
+					twitch_Dropper.DropImage("file://" + pathToLoadFrom);
+			}
+
+			VTubeStudioAPI_Detour.sendToSession(basicResponse);
 		}
-		else
-			Instance = this;
+
+		protected override string GetExecutorRequestName() => nameof(ExtendedDropItemRequest);
+
+		protected override bool InitializeInternal()
+		{
+			return true;
+		}
 	}
-
-	private void OnDestroy()
-	{
-
-	}
-
-
-#if UNITY_EDITOR
-	[EasyButtons.Button]
-#endif
-	public void Spawn()
-	{
-		var newObject = GameObject.Instantiate(spawnObjectReference);
-		newObject.gameObject.SetActive(true);
-	}
-
-	protected override void ExecuteInternal(APIBaseMessage<ExtendedDropItemRequest> payload)
-	{
-		Debug.LogError("Kurwa dziala?");
-	}
-
-	protected override bool InitializeInternal() => true;
-
-	protected override string GetExecutorRequestName() => nameof(ExtendedDropItemRequest);
 }

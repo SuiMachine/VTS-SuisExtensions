@@ -41,7 +41,7 @@ namespace SuisApiExtension.Detour
 
 				var go = new GameObject("ExtendedDropImageRequest");
 				go.transform.parent = extendedExecutor.transform;
-				extendedExecutor.ExecutorInstance_ExtendedDropImageRequest = go.AddComponent<Executor_ExtendedDropImageRequest>();
+				//extendedExecutor.ExecutorInstance_ExtendedDropImageRequest = go.AddComponent<Executor_ExtendedDropImageRequest>();
 
 			}
 		}
@@ -655,7 +655,7 @@ namespace SuisApiExtension.Detour
 				}
 			}
 
-			VTubeStudioAPI_Detour.extendedExecutor.ExecutorInstance_ExtendedDropImageRequest.Execute(apibaseMessage);
+			//VTubeStudioAPI_Detour.extendedExecutor.ExecutorInstance_ExtendedDropImageRequest.Execute(apibaseMessage);
 		}
 
 		/// <summary>

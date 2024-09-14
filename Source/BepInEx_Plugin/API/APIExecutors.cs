@@ -4,6 +4,6 @@ namespace SuisApiExtension.API
 {
 	public class APIExecutorsExtended : MonoBehaviour
 	{
-		public Executor_ExtendedDropImageRequest ExecutorInstance_ExtendedDropImageRequest;
+		//public Executor_ExtendedDropImageRequest ExecutorInstance_ExtendedDropImageRequest;
 	}
 }

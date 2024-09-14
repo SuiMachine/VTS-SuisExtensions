@@ -1,8 +1,8 @@
-﻿using Assets.ExtendedDropImages.Messages;
-using HarmonyLib;
+﻿using HarmonyLib;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SuisApiExtension.API;
+using System;
 using System.Collections.Concurrent;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -41,8 +41,9 @@ namespace SuisApiExtension.Detour
 
 				var go = new GameObject("ExtendedDropImageRequest");
 				go.transform.parent = extendedExecutor.transform;
-				//extendedExecutor.ExecutorInstance_ExtendedDropImageRequest = go.AddComponent<Executor_ExtendedDropImageRequest>();
+				Executor_ExtendedDropImageRequest executor = go.AddComponent<Executor_ExtendedDropImageRequest>();
 
+				extendedExecutor.RegisterCustomExecutor<ExtendedDropItemRequest>(ExtendedDropItemRequest.NAME, executor);
 			}
 		}
 
@@ -281,10 +282,16 @@ namespace SuisApiExtension.Detour
 							case "ArtMeshListRequest":
 								execute_ArtMeshListRequest(websocketSessionID, requestID, wholePayloadAsString, sessionAuthInfo);
 								continue;
-							case "ExtendedDropItemRequest":
-								execute_ExtendedDropImage(websocketSessionID, requestID, wholePayloadAsString, sessionAuthInfo);
-								continue;
 							default:
+								if(extendedExecutor != null)
+								{
+									if(APIExecutorsExtended.CustomAPIExecutors.TryGetValue(messageType, out IAPIRequestCustomExecutor customApiExecutor))
+									{
+										customApiExecutor.ProcessMessage(websocketSessionID, requestID, wholePayloadAsString, sessionAuthInfo);
+										continue;
+									}
+								}
+
 								messageTypeInvalidCall.Invoke(null, [websocketSessionID, requestID, messageType, sessionAuthInfo]);
 								continue;
 						}
@@ -639,25 +646,6 @@ namespace SuisApiExtension.Detour
 		}
 		#endregion
 
-		private static void execute_ExtendedDropImage(string sessionID, string requestID, string data, AuthenticatedSession auth)
-		{
-			APIBaseMessage<ExtendedDropItemRequest> apibaseMessage = JsonUtility.FromJson<APIBaseMessage<ExtendedDropItemRequest>>(data);
-			apibaseMessage.sessionAuthInfo = auth;
-			apibaseMessage.websocketSessionID = sessionID;
-			apibaseMessage.requestID = requestID;
-
-			if (apibaseMessage.data == null)
-			{
-				var temp = JObject.Parse(data);
-				if (temp != null && temp["data"] != null)
-				{
-					apibaseMessage.data = JsonUtility.FromJson<ExtendedDropItemRequest>(temp["data"].ToString());
-				}
-			}
-
-			//VTubeStudioAPI_Detour.extendedExecutor.ExecutorInstance_ExtendedDropImageRequest.Execute(apibaseMessage);
-		}
-
 		/// <summary>
 		/// This is because the JsonUtility from Unity fails to convert data node.
 		/// </summary>
@@ -714,6 +702,11 @@ namespace SuisApiExtension.Detour
 				VTubeStudioAPI.APIDebug("Sending response to " + sessionID + ": " + responseToSend, false);
 			}
 			webSocket.Send(responseToSend);
+		}
+
+		public static void SendCustomError(APICustomMessage payload, ErrorID itemFileNameMissing, string v)
+		{
+			Plugin.LogError($"F: {v}");
 		}
 	}
 }

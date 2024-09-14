@@ -130,6 +130,6 @@
   </ItemGroup>
   
    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy /Y &quot;$(TargetDir)$(ProjectName).dll&quot; &quot;D:\Steam\steamapps\common\VTube Studio\BepInEx\plugins\$(ProjectName).dll&quot;&#xD;&#xA;copy /Y &quot;$(TargetDir)$(ProjectName).pdb&quot; &quot;D:\Steam\steamapps\common\VTube Studio\BepInEx\plugins\$(ProjectName).pdb&quot;" />
+    <Exec Command="copy /Y &quot;$(TargetDir)$(ProjectName).dll&quot; &quot;D:\Steam\steamapps\common\VTube Studio\BepInEx\plugins\$(ProjectName).dll&quot;&#xD;&#xA;copy /Y &quot;$(TargetDir)$(ProjectName).pdb&quot; &quot;D:\Steam\steamapps\common\VTube Studio\BepInEx\plugins\$(ProjectName).pdb&quot;&#xD;&#xA;&#xD;&#xA;copy /Y &quot;$(TargetDir)$(ProjectName).dll&quot; &quot;$(ProjectDir)\..\Release\BepInEx\plugins\$(ProjectName).dll&quot;&#xD;&#xA;copy /Y &quot;$(TargetDir)$(ProjectName).pdb&quot; &quot;$(ProjectDir)\..\Release\BepInEx\plugins\$(ProjectName).pdb&quot;&#xD;&#xA;" />
   </Target>
 </Project>

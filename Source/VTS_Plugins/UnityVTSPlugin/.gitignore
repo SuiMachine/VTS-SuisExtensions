@@ -1,0 +1,12 @@
+Library/*
+Logs/*
+Packages/*
+Temp/*
+.vsconfig
+.vs/*
+obj/*
+UserSettings/Layouts/*
+
+# Ignore project files
+*.sln
+*.csproj

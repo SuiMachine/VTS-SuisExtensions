@@ -3,7 +3,7 @@ using SuisApiExtension.Detour;
 using UnityEngine;
 namespace SuisApiExtension.API
 {
-	public class Executor_ExtendedDropImageRequest : IAPIRequestCustomExecutor
+	public class Ext_APIExecutor_DropItems : IAPIRequestCustomExecutor
 	{
 		protected override void ExecuteInternal(APICustomMessage payload)
 		{

@@ -5,13 +5,15 @@ namespace SuisApiExtension.API
 {
 	public class APIExecutorsExtended : MonoBehaviour
 	{
-		public static Dictionary<string, IAPIRequestCustomExecutor> CustomAPIExecutors = new Dictionary<string, IAPIRequestCustomExecutor>();
-		public static bool RegisterCustomExecutor<T>(string name, IAPIRequestCustomExecutor executor)
+		internal static Dictionary<string, IAPIRequestCustomExecutor> CustomAPIExecutors = new Dictionary<string, IAPIRequestCustomExecutor>();
+		public static bool RegisterCustomExecutor<T>(IAPIRequestCustomExecutor executor, bool reparentToAPI)
 		{
+			string name = nameof(T);
 			if (!CustomAPIExecutors.ContainsKey(name))
 			{
 				VTSPluginExternals.LogMessage($"Registered executor  to register executor {name}");
 
+				//There is some code here about reparenting as well in normal DLL
 				CustomAPIExecutors.Add(name, executor);
 				return true;
 			}

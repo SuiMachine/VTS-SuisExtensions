@@ -1,5 +1,5 @@
 {
-    "name": "ExtendedDropImages",
+    "name": "Ext_DropItems",
     "rootNamespace": "",
     "references": [
         "GUID:f24cf67903b27ae498b3069ecc30cc11"

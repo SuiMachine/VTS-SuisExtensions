@@ -63,6 +63,7 @@
     <Compile Include="StringHelper.cs" />
     <Compile Include="TimeHelper.cs" />
     <Compile Include="TwitchDropper.cs" />
+    <Compile Include="UnityMainThreadDispatcher.cs" />
     <Compile Include="Utility\SingletonMonoBehaviour.cs" />
     <Compile Include="Utility\SingletonMonoBehaviourEntry.cs" />
     <Compile Include="Utility\SingletonMonoBehaviourManager.cs" />

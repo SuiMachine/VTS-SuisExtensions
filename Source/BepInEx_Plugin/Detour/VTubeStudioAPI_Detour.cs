@@ -1,6 +1,5 @@
 ﻿using HarmonyLib;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using SuisApiExtension.API;
 using System;
 using System.Collections.Concurrent;
@@ -40,12 +39,8 @@ namespace SuisApiExtension.Detour
 				Plugin.LogMessage("Adding additional executor");
 				extendedExecutor = normalExecutor.gameObject.AddComponent<APIExecutorsExtended>();
 
-				var go = new GameObject("ExtendedDropImageRequest");
-				go.transform.parent = extendedExecutor.transform;
-
 				foreach(var dll in Plugin.LibsLoaded)
 				{
-					Plugin.LogMessage($"Checking dll {dll.FullName}");
 					var types = dll.GetExportedTypes();
 					foreach (var type in types)
 					{
@@ -69,7 +64,6 @@ namespace SuisApiExtension.Detour
 						}
 
 					}
-
 				}
 			}
 		}

@@ -64,6 +64,7 @@
     <Compile Include="API\IAPIRequestCustomExecutor.cs" />
     <Compile Include="Detour\VTubeStudioAPI_Detour.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PluginAttributes.cs" />
     <Compile Include="VTSPluginExternals.cs" />
   </ItemGroup>
   <ItemGroup>

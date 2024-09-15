@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using SuisApiExtension.API;
 using System;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -41,9 +42,35 @@ namespace SuisApiExtension.Detour
 
 				var go = new GameObject("ExtendedDropImageRequest");
 				go.transform.parent = extendedExecutor.transform;
-				Executor_ExtendedDropImageRequest executor = go.AddComponent<Executor_ExtendedDropImageRequest>();
 
-				extendedExecutor.RegisterCustomExecutor<ExtendedDropItemRequest>(ExtendedDropItemRequest.NAME, executor);
+				foreach(var dll in Plugin.LibsLoaded)
+				{
+					Plugin.LogMessage($"Checking dll {dll.FullName}");
+					var types = dll.GetExportedTypes();
+					foreach (var type in types)
+					{
+						var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static).Where(x => x.CustomAttributes.Count() > 0).ToArray();
+						if (methods.Length > 0)
+						{
+							foreach(var method in methods)
+							{
+								if(method.GetCustomAttribute<VTSExtension_ExecuteAtApiStart>() != null)
+								{
+									try
+									{
+										_ = method.Invoke(extendedExecutor, []);
+									}
+									catch(Exception e)
+									{
+										Plugin.LogError($"Failed to execute {nameof(VTSExtension_ExecuteAtApiStart)} of {type.Name}: {e}");
+									}
+								}
+							}
+						}
+
+					}
+
+				}
 			}
 		}
 

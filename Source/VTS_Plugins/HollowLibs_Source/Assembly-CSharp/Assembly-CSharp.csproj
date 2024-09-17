@@ -50,6 +50,14 @@
       <HintPath>..\..\UnityVTS_Release\UnityVTSPlugin_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>..\..\UnityVTS_Release\UnityVTSPlugin_Data\Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
+      <HintPath>..\..\UnityVTS_Release\UnityVTSPlugin_Data\Managed\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\APIBaseMessage.cs" />
@@ -57,11 +65,16 @@
     <Compile Include="API\AuthenticatedSession.cs" />
     <Compile Include="API\_Other.cs" />
     <Compile Include="API\IAPIRequestExecutor.cs" />
+    <Compile Include="CachedImageNormalOrAnimated.cs" />
     <Compile Include="Interfaces\IAPIMessage.cs" />
     <Compile Include="Interfaces\IMultiSelectionWindowResultReceiver.cs" />
+    <Compile Include="MathExtensions.cs" />
+    <Compile Include="MinMax.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomHelper.cs" />
     <Compile Include="StringHelper.cs" />
     <Compile Include="TimeHelper.cs" />
+    <Compile Include="TwitchDropEdgeBounce.cs" />
     <Compile Include="TwitchDropper.cs" />
     <Compile Include="UnityMainThreadDispatcher.cs" />
     <Compile Include="Utility\SingletonMonoBehaviour.cs" />

@@ -50,6 +50,7 @@ namespace SuisApiExtension.Detour
 				}
 				___currentMin_x = (found ? tempMin : 0f);
 				___currentMax_x = (found ? tempMax : 0f);
+				VTSPluginExternals.SetCurrentMinMax(___currentMin_x, ___currentMax_x);
 
 				__instance.ModelPolyCollider.points = hullVerts;
 			}

@@ -217,9 +217,9 @@ GameObject:
   m_Component:
   - component: {fileID: 968903681}
   - component: {fileID: 968903680}
-  - component: {fileID: 1569594357252099175}
   - component: {fileID: 3752920664701896081}
   - component: {fileID: 5800681532144916186}
+  - component: {fileID: 5800681532144916187}
   m_Layer: 0
   m_Name: TwojaStaraTest
   m_TagString: Untagged
@@ -442,18 +442,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cacheCount: 0
   allCount: 0
---- !u!114 &1569594357252099175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 968903679}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  DropEmoteMaterial: {fileID: 0}
+  lockRotation: 0
+  DropTemplate: {fileID: 0}
+  ModelPolyCollider: {fileID: 0}
 --- !u!50 &3752920664701896081
 Rigidbody2D:
   serializedVersion: 4
@@ -501,3 +493,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &5800681532144916187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968903679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 317099d595cac5247a2443976b04bf64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EmoteRenderCamera: {fileID: 0}
+  spriteRenderer: {fileID: 968903680}
+  circleCollider: {fileID: 0}
+  boxCollider: {fileID: 5800681532144916186}
+  riggidBody: {fileID: 0}
+  EmoteAnimator: {fileID: 0}
+  DropMaterial_Default: {fileID: 0}
+  DropMaterial_Smooth: {fileID: 0}
+  isTemplate: 1

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Assets.Ext_DropItems.Scripts
 {
@@ -26,12 +27,12 @@ namespace Assets.Ext_DropItems.Scripts
 		private MinMax dropPysicsMultiplier = new MinMax(6f, 7f);
 		private float dropPysicsMultiplierValue = 6.5f;
 
-		public Camera EmoteRenderCamera;
+		[NonSerialized] public Camera CameraRenderer;
 		public SpriteRenderer spriteRenderer;
 		public CircleCollider2D circleCollider;
 		public BoxCollider2D boxCollider;
 		public Rigidbody2D riggidBody;
-		public Animator EmoteAnimator;
+		//public Animator Animator;
 		public Material DropMaterial_Default;
 		public Material DropMaterial_Smooth;
 
@@ -55,11 +56,11 @@ namespace Assets.Ext_DropItems.Scripts
 		{
 			this.isTemplate = false;
 			this.rotationLocked = lockRotation;
-			Vector3 localPosition = base.transform.localPosition;
+			Vector3 localPosition = this.transform.localPosition;
 			localPosition.x = RandomHelper.RandomFloatInclusive(modelOutlineX_min, modelOutlineX_max);
 			localPosition.y += RandomHelper.RandomFloat01Inclusive() * 1E-06f;
 			localPosition.z -= RandomHelper.RandomFloat01Inclusive();
-			base.transform.localPosition = localPosition;
+			this.transform.localPosition = localPosition;
 			this.dropPysicsMultiplierValue = this.dropPysicsMultiplier.RandomValue;
 			this.riggidBody.gravityScale = this.dropPysicsMultiplierValue * Ext_ImageDrop.gravityMultiplier;
 			float num = RandomHelper.RandomFloat01Inclusive().MapAndClamp(0f, 1f, -1f, 1f) * 26f;
@@ -86,7 +87,7 @@ namespace Assets.Ext_DropItems.Scripts
 		private void Update()
 		{
 			this.rawTime += Time.deltaTime;
-			if (base.transform.localPosition.y < -200f)
+			if (this.transform.localPosition.y < -200f)
 			{
 				Destroy(base.gameObject);
 			}
@@ -113,8 +114,8 @@ namespace Assets.Ext_DropItems.Scripts
 				return;
 			}
 			Vector2 velocity = this.riggidBody.velocity;
-			float orthographicSize = this.EmoteRenderCamera.orthographicSize;
-			float num = orthographicSize * this.EmoteRenderCamera.aspect;
+			float orthographicSize = this.CameraRenderer.orthographicSize;
+			float num = orthographicSize * this.CameraRenderer.aspect;
 			if (base.transform.localPosition.x > num && velocity.x > 0f)
 			{
 				if (this.edgeBounce.Bounce_Right())
@@ -148,7 +149,6 @@ namespace Assets.Ext_DropItems.Scripts
 			this.boxCollider.enabled = false;
 		}
 
-		// Token: 0x06001EAD RID: 7853 RVA: 0x000F66E4 File Offset: 0x000F48E4
 		private void updateSprite(bool forceFirstFrame = false)
 		{
 			if (Ext_ImageDrop.animate)
@@ -191,7 +191,7 @@ namespace Assets.Ext_DropItems.Scripts
 			this.dead = true;
 			this.circleCollider.enabled = false;
 			this.boxCollider.enabled = false;
-			this.EmoteAnimator.SetBool("alive", false);
+			//this.EmoteAnimator.SetBool("alive", false);
 		}
 
 		public void ReloadParameters()

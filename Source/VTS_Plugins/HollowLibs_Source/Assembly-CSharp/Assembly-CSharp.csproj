@@ -66,6 +66,7 @@
     <Compile Include="API\_Other.cs" />
     <Compile Include="API\IAPIRequestExecutor.cs" />
     <Compile Include="CachedImageNormalOrAnimated.cs" />
+    <Compile Include="CameraResolutionManager.cs" />
     <Compile Include="Interfaces\IAPIMessage.cs" />
     <Compile Include="Interfaces\IMultiSelectionWindowResultReceiver.cs" />
     <Compile Include="MathExtensions.cs" />

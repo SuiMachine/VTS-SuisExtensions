@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -25,7 +26,7 @@ namespace Assets.Ext_DropItems.Scripts
 		private static List<string> currentFilterList = new List<string>();
 		//private MultiSelectionWindowRequest twitchDropperConfig;
 
-		
+
 		private static float bounciness = 0.5f;
 		private static float size = 1f;
 		private static float rotation = 1f;
@@ -55,8 +56,6 @@ namespace Assets.Ext_DropItems.Scripts
 		public const float DEFAULT_OPACITY = 1f;
 		public const float DEFAULT_DROP_CHANCE = 100f;
 
-		public PolygonCollider2D ModelPolyCollider; // TODO: this has to reference an object in the scene
-
 		private void Awake()
 		{
 			this.cacheCount = 0;
@@ -71,7 +70,7 @@ namespace Assets.Ext_DropItems.Scripts
 		// Token: 0x06001ED1 RID: 7889 RVA: 0x000D1EB8 File Offset: 0x000D00B8
 		private void Start()
 		{
-			//this.DropTemplate.gameObject.SetActive(false);
+			this.DropTemplate.CameraRenderer = FindAnyObjectByType<CameraResolutionManager>().transform.Find("Live2D Camera").GetComponent<Camera>();
 			this.loadFromConfig();
 			this.gameObject.SetActive(false);
 			this.Invoke(nameof(checkOnInitiallyDelayed), 6.1f);
@@ -129,6 +128,8 @@ namespace Assets.Ext_DropItems.Scripts
 		{
 			Debug.Log($"[{nameof(Ext_ImageDropper)}] Turning on");
 			this.gameObject.SetActive(true);
+			if (DropTemplate.CameraRenderer == null)
+				this.DropTemplate.CameraRenderer = FindAnyObjectByType<CameraResolutionManager>().transform.Find("Live2D Camera").GetComponent<Camera>();
 		}
 
 		public void DropImage(string fileName)
@@ -396,6 +397,6 @@ namespace Assets.Ext_DropItems.Scripts
 		public static bool RollIfDrop()
 		{
 			return Ext_ImageDropper.rand.NextDouble() * 100.0 <= (double)(Ext_ImageDropper.dropChancePercent + 1E-06f);
-		}	
+		}
 	}
 }

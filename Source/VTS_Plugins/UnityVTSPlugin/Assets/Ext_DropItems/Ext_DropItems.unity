@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 5800681532144916188}
   - component: {fileID: 5800681532144916187}
   m_Layer: 0
-  m_Name: TwojaStaraTest
+  m_Name: Ext_DroppedImageTemplate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -491,7 +491,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 5.12, y: 5.12}
   m_EdgeRadius: 0
 --- !u!114 &5800681532144916187
 MonoBehaviour:
@@ -509,8 +509,8 @@ MonoBehaviour:
   circleCollider: {fileID: 5800681532144916188}
   boxCollider: {fileID: 5800681532144916186}
   riggidBody: {fileID: 3752920664701896081}
-  DropMaterial_Default: {fileID: 0}
-  DropMaterial_Smooth: {fileID: 0}
+  DropMaterial_Default: {fileID: 2100000, guid: 6bc6c76ebaf74554a9d5ebac194e4c4d, type: 2}
+  DropMaterial_Smooth: {fileID: 2100000, guid: c116c06e1c9521a4098da344b36a0163, type: 2}
   isTemplate: 1
 --- !u!58 &5800681532144916188
 CircleCollider2D:

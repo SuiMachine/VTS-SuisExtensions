@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.ExtendedDropImages.Messages;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -132,7 +133,7 @@ namespace Assets.Ext_DropItems.Scripts
 				this.DropTemplate.CameraRenderer = FindAnyObjectByType<CameraResolutionManager>().transform.Find("Live2D Camera").GetComponent<Camera>();
 		}
 
-		public void DropImage(string fileName)
+		public void DropImage(string fileName, ExtendedDropItemDefinition definition)
 		{
 			if (!gameObject.activeSelf)
 				return;
@@ -141,11 +142,11 @@ namespace Assets.Ext_DropItems.Scripts
 
 			UnityMainThreadDispatcher.Instance().Enqueue(delegate
 			{
-				this.StartCoroutine(this.GetTextureAndDrop(Path));
+				this.StartCoroutine(this.GetTextureAndDrop(Path, definition));
 			});
 		}
 
-		private IEnumerator GetTextureAndDrop(string dropEmoteURL)
+		private IEnumerator GetTextureAndDrop(string dropEmoteURL, ExtendedDropItemDefinition definition)
 		{
 			yield return new WaitForSeconds(0.1f);
 			bool hasCached = CachedImageNormalOrAnimated.HasValidInCache(dropEmoteURL);
@@ -158,16 +159,16 @@ namespace Assets.Ext_DropItems.Scripts
 			CachedImageNormalOrAnimated cachedImageNormalOrAnimated = CachedImageNormalOrAnimated.CreateOrGetCached(dropEmoteURL, downloadHandlerTexture);
 			if (cachedImageNormalOrAnimated != null && cachedImageNormalOrAnimated.valid)
 			{
-				this.drop(cachedImageNormalOrAnimated);
+				this.drop(cachedImageNormalOrAnimated, definition);
 			}
 			yield break;
 		}
 
-		private void drop(CachedImageNormalOrAnimated cachedImage)
+		private void drop(CachedImageNormalOrAnimated cachedImage, ExtendedDropItemDefinition definition)
 		{
 			GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.DropTemplate.gameObject, base.transform);
 			gameObject.SetActive(true);
-			gameObject.GetComponent<Ext_ImageDrop>().Initialize(cachedImage, this.lockRotation, this.currentMin_x, this.currentMax_x, Ext_ImageDropper.smoothBorders);
+			gameObject.GetComponent<Ext_ImageDrop>().Initialize(cachedImage, this.lockRotation, this.currentMin_x, this.currentMax_x, definition);
 		}
 
 		public void ShowConfig()

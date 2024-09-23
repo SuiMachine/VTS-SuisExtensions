@@ -29,7 +29,6 @@ namespace Assets.Ext_DropItems.Scripts
 				this.bounceBottomCount_Allowed = definition.bottomEdgeBounce;
 				this.bounceRightCount_Allowed = definition.rightEdgeBounce;
 				this.bounceTopCount_Allowed = definition.topEdgeBounce;
-
 			}
 
 			public bool Bounce_Top()
@@ -129,6 +128,7 @@ namespace Assets.Ext_DropItems.Scripts
 			this.spriteRenderer.material = (definition.startWithSmoothBorder ? this.DropMaterial_Smooth : this.DropMaterial_Default);
 			Invoke("startFadeout", fadeoutDelay);
 			Ext_ImageDrop.totalOnScreen++;
+			VTSPluginExternals.LogMessage("Initializing");
 		}
 
 		[EasyButtons.Button]
@@ -247,6 +247,7 @@ namespace Assets.Ext_DropItems.Scripts
 		private void OnDestroy()
 		{
 			Ext_ImageDrop.totalOnScreen--;
+			VTSPluginExternals.LogMessage("Deleting");
 		}
 
 		private void startFadeout()

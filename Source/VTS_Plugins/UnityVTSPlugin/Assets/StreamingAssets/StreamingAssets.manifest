@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 3985119147
+CRC: 1009238541
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: testbundle.asset
+      Name: ext_imagedropper.assetbundle
       Dependencies: {}

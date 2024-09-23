@@ -1,8 +1,6 @@
 ﻿using Assets.ExtendedDropImages.Messages;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -138,11 +136,9 @@ namespace Assets.Ext_DropItems.Scripts
 			if (!gameObject.activeSelf)
 				return;
 
-			string Path = Application.streamingAssetsPath + "/Items/" + fileName;
-
 			UnityMainThreadDispatcher.Instance().Enqueue(delegate
 			{
-				this.StartCoroutine(this.GetTextureAndDrop(Path, definition));
+				this.StartCoroutine(this.GetTextureAndDrop(fileName, definition));
 			});
 		}
 
@@ -150,25 +146,36 @@ namespace Assets.Ext_DropItems.Scripts
 		{
 			yield return new WaitForSeconds(0.1f);
 			bool hasCached = CachedImageNormalOrAnimated.HasValidInCache(dropEmoteURL);
+
 			UnityWebRequest www = UnityWebRequestTexture.GetTexture(dropEmoteURL);
 			if (!hasCached)
 			{
 				yield return www.SendWebRequest();
 			}
+
 			DownloadHandlerTexture downloadHandlerTexture = (hasCached ? null : ((DownloadHandlerTexture)www.downloadHandler));
 			CachedImageNormalOrAnimated cachedImageNormalOrAnimated = CachedImageNormalOrAnimated.CreateOrGetCached(dropEmoteURL, downloadHandlerTexture);
+			VTSPluginExternals.LogMessage($"Url: {dropEmoteURL}");
+
 			if (cachedImageNormalOrAnimated != null && cachedImageNormalOrAnimated.valid)
 			{
-				this.drop(cachedImageNormalOrAnimated, definition);
+				this.Drop(cachedImageNormalOrAnimated, definition);
+			}
+			else
+			{
+				VTSPluginExternals.LogMessage("Dupa");
+
 			}
 			yield break;
 		}
 
-		private void drop(CachedImageNormalOrAnimated cachedImage, ExtendedDropItemDefinition definition)
+		private void Drop(CachedImageNormalOrAnimated cachedImage, ExtendedDropItemDefinition definition)
 		{
-			GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.DropTemplate.gameObject, base.transform);
+			VTSPluginExternals.LogMessage("Dropping");
+			GameObject gameObject = Instantiate(this.DropTemplate.gameObject, this.transform);
 			gameObject.SetActive(true);
 			gameObject.GetComponent<Ext_ImageDrop>().Initialize(cachedImage, this.lockRotation, this.currentMin_x, this.currentMax_x, definition);
+			VTSPluginExternals.LogMessage("Dropped");
 		}
 
 		public void ShowConfig()

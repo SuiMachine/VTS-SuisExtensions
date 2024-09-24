@@ -20,8 +20,6 @@ namespace Assets.Ext_DropItems.Scripts
 
 		private Vector2 currentCenter = Vector2.zero;
 
-		private float currentMax_x;
-		private float currentMin_x;
 		private static List<string> currentFilterList = new List<string>();
 		//private MultiSelectionWindowRequest twitchDropperConfig;
 
@@ -174,7 +172,7 @@ namespace Assets.Ext_DropItems.Scripts
 			VTSPluginExternals.LogMessage("Dropping");
 			GameObject gameObject = Instantiate(this.DropTemplate.gameObject, this.transform);
 			gameObject.SetActive(true);
-			gameObject.GetComponent<Ext_ImageDrop>().Initialize(cachedImage, this.lockRotation, this.currentMin_x, this.currentMax_x, definition);
+			gameObject.GetComponent<Ext_ImageDrop>().Initialize(cachedImage, this.lockRotation, VTSPluginExternals.CurrentMin_x, VTSPluginExternals.CurrentMax_x, definition);
 			VTSPluginExternals.LogMessage("Dropped");
 		}
 

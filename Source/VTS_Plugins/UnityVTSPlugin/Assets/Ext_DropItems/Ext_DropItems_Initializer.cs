@@ -34,6 +34,8 @@ namespace Assets.ExtendedDropImages
 			}
 
 			dropperComponent.gameObject.name = nameof(Ext_ImageDropper);
+			dropperComponent.transform.position = new Vector3(0f, 67f, 100f);
+
 
 			var executor = new GameObject(nameof(Ext_APIExecutor_DropItems)).AddComponent<Ext_APIExecutor_DropItems>();
 			if (!APIExecutorsExtended.RegisterCustomExecutor<ExtendedDropItemRequest>(executor, true))

@@ -100,6 +100,7 @@ namespace Assets.Ext_DropItems.Scripts
 
 		public void Initialize(CachedImageNormalOrAnimated image, bool lockRotation, float modelOutlineX_min, float modelOutlineX_max, ExtendedDropItemDefinition definition)
 		{
+			this.CameraRenderer = VTSPluginExternals.Live2DCamera;
 			this.isTemplate = false;
 			this.rotationLocked = lockRotation;
 			Vector3 localPosition = this.transform.localPosition;

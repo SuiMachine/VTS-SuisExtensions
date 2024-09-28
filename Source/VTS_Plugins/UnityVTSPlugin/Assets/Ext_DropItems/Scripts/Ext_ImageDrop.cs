@@ -129,7 +129,7 @@ namespace Assets.Ext_DropItems.Scripts
 			this.spriteRenderer.material = (definition.startWithSmoothBorder ? this.DropMaterial_Smooth : this.DropMaterial_Default);
 			Invoke("startFadeout", fadeoutDelay);
 			Ext_ImageDrop.totalOnScreen++;
-			VTSPluginExternals.LogMessage("Initializing");
+			//VTSPluginExternals.LogMessage("Initializing");
 		}
 
 		[EasyButtons.Button]
@@ -248,7 +248,7 @@ namespace Assets.Ext_DropItems.Scripts
 		private void OnDestroy()
 		{
 			Ext_ImageDrop.totalOnScreen--;
-			VTSPluginExternals.LogMessage("Deleting");
+			//VTSPluginExternals.LogMessage("Deleting");
 		}
 
 		private void startFadeout()

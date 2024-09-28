@@ -153,27 +153,20 @@ namespace Assets.Ext_DropItems.Scripts
 
 			DownloadHandlerTexture downloadHandlerTexture = (hasCached ? null : ((DownloadHandlerTexture)www.downloadHandler));
 			CachedImageNormalOrAnimated cachedImageNormalOrAnimated = CachedImageNormalOrAnimated.CreateOrGetCached(dropEmoteURL, downloadHandlerTexture);
-			VTSPluginExternals.LogMessage($"Url: {dropEmoteURL}");
 
 			if (cachedImageNormalOrAnimated != null && cachedImageNormalOrAnimated.valid)
 			{
 				this.Drop(cachedImageNormalOrAnimated, definition);
 			}
-			else
-			{
-				VTSPluginExternals.LogMessage("Dupa");
 
-			}
 			yield break;
 		}
 
 		private void Drop(CachedImageNormalOrAnimated cachedImage, ExtendedDropItemDefinition definition)
 		{
-			VTSPluginExternals.LogMessage("Dropping");
 			GameObject gameObject = Instantiate(this.DropTemplate.gameObject, this.transform);
 			gameObject.SetActive(true);
 			gameObject.GetComponent<Ext_ImageDrop>().Initialize(cachedImage, this.lockRotation, VTSPluginExternals.CurrentMin_x, VTSPluginExternals.CurrentMax_x, definition);
-			VTSPluginExternals.LogMessage("Dropped");
 		}
 
 		public void ShowConfig()

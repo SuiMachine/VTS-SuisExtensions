@@ -36,7 +36,7 @@ namespace SuisApiExtension.API
 			basicResponse.data.success = true;
 
 			for (int i = 0; i < deserializedData.count; i++)
-				Ext_ImageDropper.Instance.DropImage("file://" + pathToLoadFrom, new ExtendedDropItemDefinition());
+				Ext_ImageDropper.Instance.DropImage("file://" + pathToLoadFrom, deserializedData.dropDefinition);
 
 			VTubeStudioAPI_Detour.sendToSession(basicResponse);
 		}

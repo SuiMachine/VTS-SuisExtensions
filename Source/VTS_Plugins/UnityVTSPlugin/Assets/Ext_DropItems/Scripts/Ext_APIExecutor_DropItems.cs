@@ -1,6 +1,8 @@
+using Assets.Ext_DropItems.Scripts;
 using Assets.ExtendedDropImages.Messages;
 using SuisApiExtension.Detour;
 using UnityEngine;
+
 namespace SuisApiExtension.API
 {
 	public class Ext_APIExecutor_DropItems : IAPIRequestCustomExecutor
@@ -8,6 +10,12 @@ namespace SuisApiExtension.API
 		protected override void ExecuteInternal(APICustomMessage payload)
 		{
 			var deserializedData = payload.data.ToObject<ExtendedDropItemRequest>();
+
+			if (Ext_ImageDropper.Instance == null)
+			{
+				VTubeStudioAPI_Detour.SendCustomError(payload, ErrorID.InternalServerError, "No Ext_ImageDropper instance.");
+				return;
+			}
 
 			if (deserializedData == null || string.IsNullOrEmpty(deserializedData.fileName) || deserializedData.fileName.Trim() == "")
 			{
@@ -26,12 +34,9 @@ namespace SuisApiExtension.API
 			APIBaseMessage<ExtendedDropItemResponse> basicResponse = VTubeStudioAPI.GetBasicResponse<ExtendedDropItemResponse>(payload.websocketSessionID, payload.requestID, "ExtendedDropItemResponse");
 			basicResponse.data = new ExtendedDropItemResponse();
 			basicResponse.data.success = true;
-			var twitch_Dropper = TwitchDropper.Instance();
-			if (twitch_Dropper != null)
-			{
-				for (int i = 0; i < deserializedData.count; i++)
-					twitch_Dropper.DropImage("file://" + pathToLoadFrom);
-			}
+
+			for (int i = 0; i < deserializedData.count; i++)
+				Ext_ImageDropper.Instance.DropImage("file://" + pathToLoadFrom, deserializedData.dropDefinition);
 
 			VTubeStudioAPI_Detour.sendToSession(basicResponse);
 		}

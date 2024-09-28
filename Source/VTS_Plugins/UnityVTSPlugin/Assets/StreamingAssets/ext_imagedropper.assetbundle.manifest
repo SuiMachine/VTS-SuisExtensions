@@ -1,0 +1,45 @@
+ManifestFileVersion: 0
+CRC: 3344129355
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: b47c494fc0143f7b80b222cfc473a924
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 10585e61f1bd5edf5170b6bc856e120c
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: b47c494fc0143f7b80b222cfc473a924
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 50
+  Script: {instanceID: 0}
+- Class: 58
+  Script: {instanceID: 0}
+- Class: 61
+  Script: {instanceID: 0}
+- Class: 62
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 317099d595cac5247a2443976b04bf64, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 44d9979fba1265a42b1ff47306f3363e, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 212
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Ext_DropItems/Prefab/Ext_Drop_PhysicsMaterial.physicsMaterial2D
+- Assets/Ext_DropItems/Ext_ImageDropper.prefab
+- Assets/Ext_DropItems/Prefab/TODO_Smooth.mat
+- Assets/Ext_DropItems/Prefab/DefaultMaterial.mat
+Dependencies: []

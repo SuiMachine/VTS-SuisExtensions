@@ -25,7 +25,7 @@ public class Plugin : BaseUnityPlugin
 
 	private void LoadExtensionDLLs()
 	{
-		var path = Path.Combine(Directory.GetParent(System.Reflection.Assembly.GetExecutingAssembly().Location).FullName, "SuisApiExtension-Extensions");
+		var path = Path.Combine(Directory.GetParent(System.Reflection.Assembly.GetExecutingAssembly().Location).FullName, "VTSExtensions");
 		if (!Directory.Exists(path))
 			return;
 

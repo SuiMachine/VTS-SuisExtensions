@@ -1,5 +1,6 @@
 ﻿using Assets.ExtendedDropImages.Messages;
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Assets.Ext_DropItems.Scripts
@@ -127,7 +128,7 @@ namespace Assets.Ext_DropItems.Scripts
 			this.m_lifeTimeRandom = RandomHelper.RandomFloat01Inclusive() * 0.5f;
 			float fadeoutDelay = definition.lifeTime + this.m_lifeTimeRandom;
 			this.spriteRenderer.material = (definition.startWithSmoothBorder ? this.DropMaterial_Smooth : this.DropMaterial_Default);
-			Invoke("startFadeout", fadeoutDelay);
+			Invoke(nameof(StartFadeout), fadeoutDelay);
 			Ext_ImageDrop.totalOnScreen++;
 			//VTSPluginExternals.LogMessage("Initializing");
 		}
@@ -251,12 +252,25 @@ namespace Assets.Ext_DropItems.Scripts
 			//VTSPluginExternals.LogMessage("Deleting");
 		}
 
-		private void startFadeout()
+		private void StartFadeout()
 		{
 			this.m_Is_Dead = true;
 			this.circleCollider.enabled = false;
 			this.boxCollider.enabled = false;
-			//this.EmoteAnimator.SetBool("alive", false);
+			StartCoroutine(TransitionToHideRoutine());
+		}
+
+		private IEnumerator TransitionToHideRoutine()
+		{
+			float stepSize = 1.0f / definition.disappearTime;
+			float t = 1.0f;
+			while (t > 0)
+			{
+				definition.opacity = t;
+				t -= stepSize * Time.deltaTime;
+				yield return null;
+			}
+			Destroy(this.gameObject);
 		}
 
 		public void ReloadParameters()
@@ -264,9 +278,15 @@ namespace Assets.Ext_DropItems.Scripts
 			if (definition == null)
 				definition = new ExtendedDropItemDefinition();
 
-			PhysicsMaterial2D physicsMaterial2D = new PhysicsMaterial2D("NewBouncyMaterial");
-			physicsMaterial2D.bounciness = definition.bounciness;
-			this.riggidBody.sharedMaterial = physicsMaterial2D;
+			if (this.riggidBody.sharedMaterial == null)
+			{
+				PhysicsMaterial2D physicsMaterial2D = new PhysicsMaterial2D("NewBouncyMaterial");
+				this.riggidBody.sharedMaterial = physicsMaterial2D;
+			}
+
+			this.riggidBody.sharedMaterial.friction = 1f;
+			this.riggidBody.sharedMaterial.bounciness = definition.bounciness;
+
 			this.riggidBody.gravityScale = this.dropPysicsMultiplierValue * definition.gravity;
 			this.transform.localScale = new Vector3(definition.sizeScale, definition.sizeScale, 1f);
 			this.riggidBody.angularDrag = definition.rotation.MapAndClamp(1f, 0f, 0f, 5f);
@@ -278,7 +298,7 @@ namespace Assets.Ext_DropItems.Scripts
 			float num = definition.lifeTime + this.m_lifeTimeRandom;
 			if (num < this.m_rawTime)
 			{
-				this.startFadeout();
+				this.StartFadeout();
 				return;
 			}
 			(num - this.m_rawTime).ClampBetween(0.1f, 60f);

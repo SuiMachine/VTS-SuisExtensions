@@ -20,6 +20,7 @@ namespace Assets.ExtendedDropImages.Messages
 		public bool normalizeScale = false;
 		public bool startWithSmoothBorder = true;
 		public float lifeTime = 3.0f;
+		public float disappearTime = 3.0f;
 		public float opacity = 1.0f;
 		public float animationSpeed = 1.0f;
 		public float gravity = 1.0f;
